@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         await data.ready;
     } catch (error) {
-        console.error("EulalieTV: Failed to load schedule data.";
+        console.error("EulalieTV: Failed to load schedule data.");
         scheduleEmpty.hidden = false;
         scheduleEmpty.textContent = "Unable to load the schedule. Please try again later.";
         return;
