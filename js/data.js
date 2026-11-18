@@ -57,10 +57,9 @@ window.EulalieTVData = {
                     videoUrl: episodeData.videoUrl || "",
                     
                     adBreaks: (episodeData.adBreaks || []).map(adBreak => ({
-                        atSeconds: adBreak.timeSeconds ??
-                            adBreak.atSeconds,
-                        maxDurationSeconds: adBreak.maxDurationSeconds
-                    });
+                        atSeconds: adBreak.timeSeconds ?? adBreak.atSeconds,
+                        maxDurationSeconds: adbreak.maxDurationSeconds
+                    }))
                 };
             });
             
