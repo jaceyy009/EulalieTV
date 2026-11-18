@@ -1,6 +1,6 @@
 // EulalieTV – Shows Page
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const showsGrid = document.getElementById("shows-grid");
     const showsEmpty = document.getElementById("shows-empty");
     
@@ -11,6 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
     
     if (!window.EulalieTVData) {
         console.error("EulalieTV: Shared data failed to load.");
+        showsEmpty.hidden = false;
+        showsEmpty.textContent = "Unable to load shows. Please try again later.";
+        return;
+    }
+
+    try {
+        await window.EulalieTVData.ready;
+    } catch (error) {
+        console.error("EulalieTV: Failed to load show data.", error);
         showsEmpty.hidden = false;
         showsEmpty.textContent = "Unable to load shows. Please try again later.";
         return;
