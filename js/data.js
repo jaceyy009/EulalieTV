@@ -127,7 +127,7 @@ window.EulalieTVData = {
             const lineupData = lineupSnapshot.data();
             
             const startTime = lineupData.startTime || "07:00";
-            const slotMinutes = Number(lineupdata.slotMinutes || 30);
+            const slotMinutes = Number(lineupData.slotMinutes || 30);
             
             const lineup = lineupData.lineup || [];
             const daysOfWeek = lineupData.daysOfWeek || [];
