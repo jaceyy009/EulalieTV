@@ -35,7 +35,7 @@ if (browseShowsButton) {
 
 // Homepage Schedule
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const data = window.EulalieTVData;
     
     const liveStatus = document.getElementById("live-status");
