@@ -168,7 +168,7 @@ window.EulalieTVData = {
                         episodeNumber: Number(program.episodeNumber),
                         startTime: formatTime(slotStart),
                         endTime: formatTime(slotEnd),
-                        daysOfWeek: [...daysOfWeek]
+                        daysOfWeek: daysOfWeek.map(Number)
                     };
                 }
             );
