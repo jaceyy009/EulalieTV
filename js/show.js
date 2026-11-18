@@ -1,6 +1,6 @@
 // EulalieTV – Individual Show Page
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const titleElement = document.getElementById("show-title");
     const descriptionElement = document.getElementById("show-description");
     const posterElement = document.getElementById("show-poster");
@@ -33,10 +33,21 @@ document.addEventListener("DOMContentLoaded", () => {
         notFoundElement.textContent = "Unable to load show information. Please try again later.";
         return;
     }
+
+    const data = window.EulalieTVData;
+
+    try {
+        await data.ready;
+    } catch (error) {
+        console.error("EulalieTV: Failed to load show data.", error);
+        notFoundElement.hidden = false;
+        notFoundElement.textContent = "Unable to load show information. Please try again later.";
+        return;
+    }
     
     const params = new URLSearchParams(window.location.search);
     const showId = params.get("id");
-    const show = window.EulalieTVData.getShow(showId);
+    const show = data.getShow(showId);
     
     if (!show) {
         titleElement.textContent = "Show Not Found";
