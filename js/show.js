@@ -167,6 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const duration = document.createElement("p");
             duration.className = "episode-duration";
             duration.textContent = formatDuration(episode.durationSeconds);
+            console.log("Episode duration:", episode.durationSeconds, typeof episode.durationSeconds);
             
             card.appendChild(duration);
             
