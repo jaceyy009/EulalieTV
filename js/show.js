@@ -167,7 +167,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const duration = document.createElement("p");
             duration.className = "episode-duration";
             duration.textContent = formatDuration(episode.durationSeconds);
-            console.log("Episode duration:", episode.durationSeconds, typeof episode.durationSeconds);
             
             card.appendChild(duration);
             
@@ -183,7 +182,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function formatDuration(totalSeconds) {
-    if (typeof totalSeconds !== "number" || !Number.isFinite(totalSeconds) || totalSeconds <= 0) {
+    totalSeconds = Number(totalSeconds);
+    
+    if (!Number.isFinite(totalSeconds) || totalSeconds <= 0) {
         return ("Duration unavailable");
     }
     
