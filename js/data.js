@@ -60,7 +60,7 @@ window.EulalieTVData = {
                         atSeconds: adBreak.timeSeconds ??
                             adBreak.atSeconds,
                         maxDurationSeconds: adBreak.maxDurationSeconds
-                    }));
+                    });
                 };
             });
             
