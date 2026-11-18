@@ -1,6 +1,6 @@
 // EulalieTV – Schedule Page
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const scheduleList = document.getElementById("schedule-list");
     const scheduleEmpty = document.getElementById("schedule-empty");
     const scheduleDate = document.getElementById("schedule-date");
@@ -29,6 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const data = window.EulalieTVData;
+
+    try {
+        await data.ready;
+    } catch (error) {
+        console.error("EulalieTV: Failed to load schedule data.",
+        scheduleEmpty.hidden = false;
+        scheduleEmpty.textContent = "Unable to load the schedule. Please try again later.";
+        return;
+    }
+    
     const settings = data.settings;
 
     let selectedDate = getEasternDate();
