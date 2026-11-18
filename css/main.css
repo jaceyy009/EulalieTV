@@ -1,0 +1,921 @@
+/* Global */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+}
+
+body {
+    background: #0b0b10;
+    color: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Page loading */
+
+.page-loading-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background: #0b0b10;
+}
+
+#loading-spinner {
+    width: 42px;
+    height: 42px;
+    
+    border: 4px solid rgba(255, 255, 255, 0.15);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    
+    animation: loading-spin 0.8s linear infinite;
+}
+
+@keyframes loading-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Header */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 72px;
+    padding: 0 48px;
+    
+    background: rgba(11, 11, 16, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    
+    backdrop-filter: blur(12px);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.main-nav a {
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+    
+    font-size: 15px;
+    font-weight: 500;
+    
+    transition:
+        color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.main-nav a:hover {
+    color: #ffffff;
+}
+
+/* Main Content */
+
+main {
+    width: 100%;
+}
+
+/* Currently Playing */
+
+.playing-now-status {
+    min-height: 520px;
+    padding: 100px 8% 80px;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    
+    background:
+        linear-gradient(
+            to top,
+            #0b0b01 0%,
+            rgba(11, 11, 16, 0.65) 45%,
+            rgba(11, 11, 16, 0.15) 100%
+        );
+}
+
+.playing-now-status h1 {
+    margin: 0 0 12px;
+    
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.playing-now-status p {
+    margin: 0 0 12px;
+    
+    font-size: 42px;
+    font-weight: 700;
+}
+
+.playing-now-status span {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+}
+
+#episode-title {
+    color: #ffffff;
+}
+
+#watch-now {
+    width: fit-content;
+    
+    margin-top: 28px;
+    padding: 13px 24px;
+    
+    border: 0;
+    border-radius: 6px;
+    
+    background: #ffffff;
+    color: #0b0b10;
+    
+    font-size: 15px;
+    font-weight: 700;
+    
+    cursor: pointer;
+    
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+#watch-now:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* What's On */
+
+.whats-on {
+    padding: 60px 8% 100px;
+}
+
+.whats-on > p {
+    margin: 0 0 20px;
+    
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.now-show,
+.next-show {
+    display: inline-block;
+    vertical-align: top;
+    
+    width: calc(50% - 12px);
+    min-height: 150px;
+    
+    padding: 24px;
+    
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    
+    background: #13131a;
+}
+
+.now-show p,
+.next-show p {
+    margin: 0 0 10px;
+}
+
+.now-show span,
+.next-show span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+}
+
+#browse-shows {
+    display: block;
+    
+    margin-top: 28px;
+    padding: 12px 20px;
+    
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    
+    background: transparent;
+    color: #ffffff;
+    
+    font-size: 14px;
+    font-weight: 600;
+    
+    cursor: pointer;
+    
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+#browse-shows:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    
+    .site-header {
+        height: 64px;
+        padding: 0 20px;
+    }
+    
+    .logo {
+        font-size: 20px;
+    }
+    
+    .main-nav {
+        gap: 14px;
+    }
+    
+    .main-nav a {
+        font-size: 13px;
+    }
+    
+    .playing-now-status {
+        min-height: 450px;
+        padding: 70px 24px 50px;
+    }
+    
+    .playing-now-status p {
+        font-size: 32px;
+    }
+    
+    .whats-on {
+        padding: 40px 24px 70px;
+    }
+    
+    .now-show,
+    .next-show {
+        display: block;
+        width: 100%;
+    }
+    
+    .next-show {
+        margin: 16px 0 0;
+    }
+}
+
+/* Broadcast Player */
+
+.broadcast-player {
+    position: relative;
+    
+    width: 100%;
+    height: calc(100vh - 72px);
+    
+    min-height: 400px;
+    
+    overflow: hidden;
+    
+    background: #000000;
+}
+
+.live-video {
+    display: block;
+    
+    width: 100%;
+    height: 100%;
+    
+    object-fit: contain;
+    
+    background: #000000;
+}
+
+/* Broadcast OSD */
+
+.broadcast-osd {
+    position: absolute;
+    inset: 0;
+    
+    z-index: 10;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    padding: 36px 48px;
+    
+    color: #ffffff;
+    
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.55),
+            transparent 25%,
+            transparent 65%,
+            rgba(0, 0, 0, 0.7)
+        );
+        
+    opacity: 0;
+    visibility: hidden;
+    
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease;
+        
+    pointer-events: none;
+}
+
+/* JS will add/remove this class whe the viewer interacts with the player. */
+
+.broadcast-osd.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* OSD Information */
+
+.osd-information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
+    gap: 6px;
+}
+
+.osd-live-status {
+    font-size: 14px;
+    font-weight: 700;
+    
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.osd-show-name {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.osd-episode {
+    display: flex;
+    align-items: center;
+    
+    gap: 6px;
+    
+    color: rgba(255, 255, 255, 0.75);
+    
+    font-size: 15px;
+}
+
+/* OSD Bottom */
+
+.osd-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    
+    width: 100%;
+}
+
+/* Up Next */
+
+.osd-up-next {
+    display: flex;
+    flex-direction: column;
+    
+    align-items: flex-start;
+    
+    text-align: left;
+}
+
+.osd-label {
+    margin-bottom: 5px;
+    
+    font-size: 12px;
+    font-weight: 700;
+    
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    
+    color: rgba(255, 255, 255, 0.65);
+}
+
+#osd-next-show {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+#osd-next-episode {
+    margin-top: 3px;
+    
+    font-size: 14px;
+    
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#osd-next-episode-label {
+    margin-top: 5px;
+    
+    font-size: 12px;
+    
+    color: rgba(255, 255, 255, 0.55);
+}
+
+/* OSD Controls */
+
+.osd-controls {
+    margin-left: 24px;
+}
+
+#fullscreen-button {
+    width: 42px;
+    height: 42px;
+    
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50%;
+    
+    background: rgba(0, 0, 0, 0.45);
+    color: #ffffff;
+    
+    font-size: 20px;
+    
+    cursor: pointer;
+    
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+#fullscreen-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+    
+    transform: scale(1.05);
+}
+
+/* Broadcast Mobile */
+
+@media (max-width: 700px) {
+    
+    .broadcast-player {
+        height: calc(100vh - 64px);
+    }
+    
+    .broadcast-osd {
+        padding: 24px;
+    }
+    
+    .osd-show-name {
+        font-size: 23px;
+    }
+    
+    .osd-episode {
+        font-size: 13px;
+    }
+    
+    .osd-up-next {
+        align-items: flex-start;
+        
+        margin-left: 0;
+        
+        text-align: left;
+    }
+    
+    .osd-controls {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+/* Shows Page */
+
+.shows-page {
+    padding: 48px 8% 80px;
+}
+
+.shows-heading {
+    margin-bottom: 32px;
+}
+
+.shows-heading h1 {
+    margin: 0 0 10px;
+    font-size: 36px;
+}
+
+.shows-heading p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.shows-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.show-card {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    
+    color: inherit;
+    text-decoration: none;
+    
+    border-radius: 10px;
+    background: #13131a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.show-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.show-poster {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    background: #20202a;
+}
+
+.show-details {
+    padding: 16px;
+}
+
+.show-details h2 {
+    margin: 0 0 8px;
+    font-size: 18px;
+}
+
+.show-details p {
+    margin: 0 0 12px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.show-status {
+    font-size: 12px;
+    color: #a5d6a7;
+}
+
+.show-status[data-status="coming soon"] {
+    color: #83bffc;
+}
+
+@media (max-width: 1000px) {
+    .shows-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .shows-page {
+        padding: 32px 20px 60px;
+    }
+    
+    .shows-heading h1 {
+        font-size: 30px;
+    }
+    
+    .shows-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+    
+    .show-details {
+        padding: 12px;
+    }
+    
+    .show-details h2 {
+        font-size: 16px;
+    }
+}
+
+/* Individual Show Page */
+
+.show-page {
+    padding: 32px 8% 80px;
+}
+
+#back-to-shows {
+    margin-bottom: 32px;
+    padding: 10px 16px;
+    
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    
+    background: transparent;
+    color: #ffffff;
+    
+    font-size: 14px;
+    cursor: pointer;
+    
+    transition: background 0.2s ease;
+}
+
+#back-to-shows:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.show > h1 {
+    margin: 0 0 16px;
+    font-size: 40px;
+}
+
+#show-description {
+    max-width: 750px;
+    margin: 0 0 20px;
+    
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    line-height: 1.7;
+}
+
+#show-poster {
+    display: block;
+    width: 220px;
+    max-width: 100%;
+    height: auto;
+    margin: 24px 0;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+#show-status {
+    display: inline-block;
+    margin: 0 0 36px;
+    
+    color: #a5d6a7;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.episodes {
+    margin-top: 24px;
+}
+
+.episodes > h2 {
+    margin: 0 0 20px;
+    font-size: 26px;
+}
+
+.episode-card {
+    padding: 20px;
+    margin-bottom: 14px;
+    
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    
+    background: #13131a;
+}
+
+.episode-number {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.episode-card h4 {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.episode-card p {
+    margin: 0;
+    
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#show-not-found {
+    margin-top: 24px;
+    line-height: 1.7;
+}
+
+#show-not-found a {
+    color: #83bffc;
+}
+
+@media (max-width: 700px) {
+    .show-page {
+        padding: 24px 20px 60px;
+    }
+    
+    .show > h1 {
+        font-size: 32px;
+    }
+    
+    #show-description {
+        font-size: 15px;
+    }
+    
+    #show-poster {
+        width: 180px;
+    }
+    
+    .episodes > h2 {
+        font-size: 23px;
+    }
+    
+    .episode-card {
+        padding: 16px;
+    }
+}
+
+/* Schedule Page */
+
+.schedule-page {
+    padding: 48px 8% 80px;
+}
+
+.schedule-heading {
+    margin-bottom: 36px;
+}
+
+.schedule-heading h1 {
+    margin: 0 0 10px;
+    font-size: 36px;
+}
+
+.schedule-heading p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+}
+
+/* Date Navigation */
+
+.schedule-date-section {
+    margin-bottom: 28px;
+}
+
+.schedule-date-header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
+}
+
+.schedule-date-header h2 {
+    margin: 0;
+    font-size: 22px;
+    text-align: center;
+}
+
+.schedule-date-header button,
+#today-button {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: #13131a;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#today-button {
+    padding: 10px 16px;
+    font-size: 14px;
+}
+
+.schedule-date-header button:hover,
+#today-button:hover {
+    background: #252530;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Schedule Entries */
+
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.schedule-entry {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 24px;
+    padding: 22px;
+    
+    background: #13131a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    
+    transition: border-color 0.2s ease;
+}
+
+.schedule-entry:hover {
+    border-color: rgba(255, 255, 255, 0.22);
+}
+
+.schedule-entry-time {
+    padding-top: 3px;
+    color: #83bffc;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.6;
+}
+
+.schedule-entry-details h2 {
+    margin: 0 0 8px;
+    font-size: 20px;
+}
+
+.schedule-entry-episode {
+    margin: 0 0 8px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+}
+
+.schedule-entry-description {
+    margin: 0 0 14px;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.schedule-entry-link {
+    display: linline-block;
+    color: #83bffc;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.schedule-entry-link:hover {
+    text-decoration: underline;
+}
+
+/* Empty Schedule */
+
+#schedule-empty {
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    background: #13131a;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    .schedule-page {
+        padding: 32px 20px 60px;
+    }
+    
+    .schedule-heading h1 {
+        font-size: 30px;
+    }
+    
+    .schedule-date-header {
+        gap: 10px;
+    }
+    
+    .schedule-date-header h2 {
+        flex: 1;
+        font-size: 17px;
+    }
+    
+    .schedule-entry {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 18px;
+    }
+    
+    .schedule-entry-time {
+        font-size: 13px;
+    }
+    
+    .schedule-entry-details h3 {
+        font-size: 18px;
+    }
+}

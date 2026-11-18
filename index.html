@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>EulalieTV</title>
+        
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    
+    <body>
+        
+        <div id="page-loading" class="page-loading-overlay">
+            <div id="loading-spinner"></div>
+        </div>
+        
+        <header class="site-header">
+            <a href="index.html" class="logo">EulalieTV</a>
+            <nav class="main-nav">
+                <a href="broadcast.html">Watch</a>
+                <a href="shows.html">Shows</a>
+                <a href="schedule.html">Schedule</a>
+                <a href="search.html" aria-label="Search" title="Search">🔍</a>
+            </nav>
+        </header>
+        
+        <main>
+            
+            <section class="playing-now-status">
+                <h1 id="live-status"></h1>
+                <p id="show-name"></p>
+                <span id="season"></span>
+                <span id="episode"></span>
+                <span id="episode-separator" hidden>--</span>
+                <span id="episode-title"></span>
+                <button id="watch-now" type="button">Watch Now</button>
+            </section>
+            
+            <section class="whats-on">
+                <p>Now</p>
+                
+                <section class="now-show" aria-label="Currently airing">
+                    <p id="now-show-name"></p>
+                    <span id="now-season"></span>
+                    <span id="now-episode"></span>
+                    <p id="now-time"></p>
+                </section>
+                
+                <p>Next</p>
+                
+                <section class="next-show">
+                    <p id="next-show-name"></p>
+                    <span id="next-season"></span>
+                    <span id="next-episode"></span>
+                    <p id="next-time"></p>
+                </section>
+                
+                <button id="browse-shows">Browse Shows</button>
+                
+            </section>
+        </main>
+        
+        <script type="module" src="js/data.js"></script>
+        <script type="module" src="js/app.js"></script>
+    </body>
+</html>

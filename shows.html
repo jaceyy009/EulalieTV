@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shows – EulalieTV</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    
+    <body>
+        
+        <header class="site-header">
+            <a href="index.html" class="logo">EulalieTV</a>
+            <nav class="main-nav">
+                <a href="broadcast.html">Watch</a>
+                <a href="shows.html">Shows</a>
+                <a href="schedule.html">Schedule</a>
+                <a href="search.html">🔍</a>
+            </nav>
+        </header>
+        
+        <main class="shows-page">
+            
+            <section class="shows-heading">
+                <h1>Shows</h1>
+                <p>Discover what's on EulalieTV.</p>
+            </section>
+            
+            <section id="shows-grid" class="shows-grid" aria-label="Available shows">
+                <!-- Show cards will be added here by JS. -->
+            </section>
+            
+            <p id="shows-empty" hidden>
+                No shows are available right now.
+            </p>
+            
+        </main>
+        
+        <script src="js/app.js"></script>
+        <script src="js/data.js"></script>
+        <script src="js/shows.js"></script>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Watch – EulalieTV</title>
+        
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    
+    <body>
+        
+        <header class="site-header">
+            <a href="index.html" class="logo">EulalieTV</a>
+            
+            <nav class="main-nav" aria-label="Main navigation">
+                <a href="broadcast.html" aria-current="page">Watch</a>
+                <a href="shows.html">Shows</a>
+                <a href="schedule.html">Schedule</a>
+                <a href="search.html" aria-label="Search" title="Search">🔍</a>
+            </nav>
+        </header>
+        
+        <main>
+            
+            <section class="broadcast-player" aria-label="EulalieTV live broadcast">
+                
+                <video id="live-video" class="live-video" autoplay playsinline preload="auto" aria-label="EulaliveTV program video"></video>
+                
+                <div id="broadcast-message" class="broadcast-message" role="status" aria-live="polite" hidden></div>
+                
+                <div id="broadcast-osd" class="broadcast-osd">
+                    
+                    <div class="osd-information">
+                        
+                        <div id="osd-live-status" class="osd-live-status"></div>
+                        <div id="osd-show-name" class="osd-show-name"></div>
+                        <div class="osd-episode">
+                            <span id="osd-season"></span>
+                            <span id="osd-episode"></span>
+                            <span id="osd-separator" hidden>–</span>
+                            <span id="osd-episode-title"></span>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="osd-bottom">
+                        
+                        <div class="osd-up-next">
+                            <span id="osd-up-next-label" class="osd-label">UP NEXT</span>
+                            <span id="osd-next-show"></span>
+                            <span id="osd-next-episode"></span>
+                        </div>
+                        
+                        <div class="osd-controls">
+                            <button id="fullscreen-button" type="button" aria-label="Enter fullscreen" aria-pressed="false">
+                                <img id="fullscreen-icon" src="assets/icons/fullscreen.svg" alt="">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <script type="module" src="js/data.js"></script>
+        <script type="module" src="js/app.js"></script>
+        <script type="module" src="js/broadcast.js"></script>
+        
+    </body>
+    
+</html>
