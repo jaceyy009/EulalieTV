@@ -318,6 +318,8 @@ if (liveVideo && broadcastPlayer) {
                 liveVideo.currentTime = playbackOffset;
             }
 
+            liveVideo.muted = true;
+
             liveVideo.play().catch(function (error) {
                 console.warn("Automatic playback was blocked:", error);
                 showMessage("Press play to start the broadcast.");
