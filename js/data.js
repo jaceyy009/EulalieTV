@@ -139,7 +139,7 @@ window.EulalieTVData = {
             function formatTime(totalMinutes) {
                 const minutes = totalMinutes % 1440;
                 const hours = Math.floor(minutes / 60);
-                const remainder = mintes % 60;
+                const remainder = minutes % 60;
                 
                 return String(hours).padStart(2, "0") +
                     ":" +
@@ -151,7 +151,7 @@ window.EulalieTVData = {
             const endMinutes = 23 * 60;
             
             const slotCount = Math.floor(
-                (endMinutes - startMinutes) / slotMintes
+                (endMinutes - startMinutes) / slotMinutes
             );
             
             window.EulalieTVData.schedule = Array.from(
