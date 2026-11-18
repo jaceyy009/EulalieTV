@@ -41,6 +41,20 @@ document.addEventListener("DOMContentLoaded", async function () {
     const liveStatus = document.getElementById("live-status");
     const nowShowName = document.getElementById("now-show-name");
     const nextShowName = document.getElementById("next-show-name");
+
+    const showName = document.getElementById("show-name");
+    const seasonLabel = document.getElementById("season");
+    const episodeLabel = document.getElementById("episode");
+    const episodeTitle = document.getElementById("episode-title");
+    const episodeSeparator = document.getElementById("episode-separator");
+
+    const nowSeason = document.getElementById("now-season");
+    const nowEpisode = document.getElementById("now-episode");
+    const nowTime = document.getElementById("now-time");
+
+    const nextSeason = document.getElementById("next-season");
+    const nextEpisode = document.getElementById("next-episode");
+    const nextTime = document.getElementById("next-time");
     
     if (!liveStatus || !nowShowName || !nextShowName) {
         return;
