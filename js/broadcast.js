@@ -7,6 +7,15 @@ const broadcastPlayer = document.querySelector(".broadcast-player");
 const broadcastOSD = document.getElementById("broadcast-osd");
 const liveVideo = document.getElementById("live-video");
 const broadcastMessage = document.getElementById("broadcast-message");
+const broadcastLoading = document.getElementById("broadcasting-loading");
+
+function showLoading() {
+    broadcastLoading?.classList.remove("hidden");
+}
+
+function hideLoading() {
+    broadcastLoading?.classList.add("hidden");
+}
 
 const fullscreenButton = document.getElementById("fullscreen-button");
 const fullscreenIcon = document.getElementById("fullscreen-icon");
@@ -291,6 +300,7 @@ if (liveVideo && broadcastPlayer) {
             showMessage("No program is currently scheduled.");
 
             clearVideo();
+            hideLoad();
             activeSlotId = null;
 
             return;
@@ -315,6 +325,7 @@ if (liveVideo && broadcastPlayer) {
                 clearVideo();
             }
 
+            hideLoading();
             activeSlotId = slot.id;
 
             return;
@@ -334,26 +345,41 @@ if (liveVideo && broadcastPlayer) {
 
         playbackOffset = getPlaybackOffset(slot, currentTime);
 
+        showLoading();
+
         liveVideo.src = videoUrl;
 
         liveVideo.addEventListener("loadedmetadata", function onLoaded() {
             liveVideo.removeEventListener("loadedmetadata", onLoaded);
 
-            if (Number.isFinite(liveVideo.duration)) {
-                liveVideo.currentTime = Math.min(
+            const targetTime = Number.isFinite(liveVideo.duration)
+                ? Math.min(
                     playbackOffset,
-                    Math.max(0, liveVideo.duration - 1)
-                );
-            } else {
-                liveVideo.currentTime = playbackOffset;
-            }
+                    Math.mox(0, liveVideo.duration - 1)
+                )
+                : playbackOffset;
 
             liveVideo.muted = true;
 
-            liveVideo.play().catch(function (error) {
-                console.warn("Automatic playback was blocked:", error);
-                showMessage("Press play to start the broadcast.");
-            });
+            function startPlayback() {
+                liveVideo.play().then(function () {
+                    hideLoading();
+                }).catch(function (error) {
+                    console.warn("Automatic playback was blocked:", error);
+                    showMessage("Press play to start the broadcast.");
+                    hideLoading();
+                });
+            }
+
+            if (Math.abs(liveVideo.currentTime - targetTime) < 0.05) {
+                startPlayback();
+            } else {
+                liveVideo.addEventListener("seeked", function onSeeked() {
+                    startPlayback();
+                }, { once: true });
+
+                liveVideo.currentTime = targetTime;
+            }
         });
 
         liveVideo.load();
