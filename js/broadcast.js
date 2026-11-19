@@ -254,6 +254,8 @@ if (liveVideo && broadcastPlayer) {
     }
 
     function clearVideo() {
+        console.tracte("clearVideo() was called");
+        
         liveVideo.pause();
         liveVideo.removeAttribute("src");
         liveVideo.load();
