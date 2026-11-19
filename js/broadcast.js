@@ -300,7 +300,7 @@ if (liveVideo && broadcastPlayer) {
             showMessage("No program is currently scheduled.");
 
             clearVideo();
-            hideLoad();
+            hideLoading();
             activeSlotId = null;
 
             return;
@@ -375,7 +375,8 @@ if (liveVideo && broadcastPlayer) {
                 startPlayback();
             } else {
                 liveVideo.addEventListener("seeked", function onSeeked() {
-                    startPlayback();
+                    if (liveVideo.src === new URL(videoUrl, document.baseURI).href) {
+                        startPlayback();
                 }, { once: true });
 
                 liveVideo.currentTime = targetTime;
