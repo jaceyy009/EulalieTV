@@ -254,7 +254,7 @@ if (liveVideo && broadcastPlayer) {
     }
 
     function clearVideo() {
-        console.tracte("clearVideo() was called");
+        console.trace("clearVideo() was called");
         
         liveVideo.pause();
         liveVideo.removeAttribute("src");
