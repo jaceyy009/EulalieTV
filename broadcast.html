@@ -27,6 +27,15 @@
             <section class="broadcast-player" aria-label="EulalieTV live broadcast">
                 
                 <video id="live-video" class="live-video" autoplay playsinline preload="auto" aria-label="EulaliveTV program video"></video>
+
+                <div id="broadcast-loading" class="broadcast-loading" role="status">
+                    <div class="loading-content">
+                        <h2>EualalieTV</h2>
+                        <div class="loading-spinner"></div>
+                        <p>Synchronizing broadcast...</p>
+                        <span>Please wait while we tune in.</span>
+                    </div>
+                </div>
                 
                 <div id="broadcast-message" class="broadcast-message" role="status" aria-live="polite" hidden></div>
                 
