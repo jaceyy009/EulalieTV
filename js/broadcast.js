@@ -27,7 +27,7 @@ liveVideo.addEventListener("error", () => {
     console.log("Video error:", liveVideo.error);
 });
 
-liveVideo.addEventListener("timeupdate", () => {
+/* liveVideo.addEventListener("timeupdate", () => {
     console.log(
         "Playback:",
         liveVideo.currentTime,
@@ -38,7 +38,7 @@ liveVideo.addEventListener("timeupdate", () => {
         "Paused:",
         liveVideo.paused
     );
-});
+}); */
                 
 
 // Shared Data
@@ -266,9 +266,7 @@ if (liveVideo && broadcastPlayer) {
         broadcastMessage.hidden = true;
     }
 
-    function clearVideo() {
-        console.trace("clearVideo() was called");
-        
+    function clearVideo() {        
         liveVideo.pause();
         liveVideo.removeAttribute("src");
         liveVideo.load();
