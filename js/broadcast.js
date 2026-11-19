@@ -11,6 +11,25 @@ const broadcastMessage = document.getElementById("broadcast-message");
 const fullscreenButton = document.getElementById("fullscreen-button");
 const fullscreenIcon = document.getElementById("fullscreen-icon");
 
+const liveVideo = document.getElementById("live-video");
+
+liveVideo.addEventListener("pause", () => {
+    console.log("Video paused. Current time:", liveVideo.currentTime);
+});
+
+liveVideo.addEventListener("waiting", () => {
+    console.log("Video waiting for data.");
+});
+
+liveVideo.addEventListener("stalled", () => {
+    console.log("Video stalled.");
+});
+
+liveVideo.addEventListener("error", () => {
+    console.log("Video error:", liveVideo.error);
+});
+
+
 // Shared Data
 
 const data = window.EulalieTVData;
