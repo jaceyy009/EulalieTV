@@ -7,7 +7,7 @@ const broadcastPlayer = document.querySelector(".broadcast-player");
 const broadcastOSD = document.getElementById("broadcast-osd");
 const liveVideo = document.getElementById("live-video");
 const broadcastMessage = document.getElementById("broadcast-message");
-const broadcastLoading = document.getElementById("broadcasting-loading");
+const broadcastLoading = document.getElementById("broadcast-loading");
 
 function showLoading() {
     broadcastLoading?.classList.remove("hidden");
@@ -438,6 +438,7 @@ if (liveVideo && broadcastPlayer) {
             showMessage("EulalieTV is currently off air.");
 
             clearVideo();
+            hideLoading();
             activeSlotId = null;
 
             return;
