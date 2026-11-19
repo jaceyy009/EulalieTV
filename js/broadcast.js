@@ -377,6 +377,7 @@ if (liveVideo && broadcastPlayer) {
                 liveVideo.addEventListener("seeked", function onSeeked() {
                     if (liveVideo.src === new URL(videoUrl, document.baseURI).href) {
                         startPlayback();
+                    }
                 }, { once: true });
 
                 liveVideo.currentTime = targetTime;
