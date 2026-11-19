@@ -355,7 +355,7 @@ if (liveVideo && broadcastPlayer) {
             const targetTime = Number.isFinite(liveVideo.duration)
                 ? Math.min(
                     playbackOffset,
-                    Math.mox(0, liveVideo.duration - 1)
+                    Math.max(0, liveVideo.duration - 1)
                 )
                 : playbackOffset;
 
