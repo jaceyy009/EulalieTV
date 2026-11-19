@@ -27,6 +27,19 @@ liveVideo.addEventListener("error", () => {
     console.log("Video error:", liveVideo.error);
 });
 
+liveVideo.addEventListener("timeupdate", () => {
+    console.log(
+        "Playback:",
+        liveVideo.currentTime,
+        "Buffered:",
+        liveVideo.buffered.length
+            ? liveVideo.buffered.end(liveVideo.buffered.length - 1)
+            : 0,
+        "Paused:",
+        liveVideo.paused
+    );
+});
+                
 
 // Shared Data
 
