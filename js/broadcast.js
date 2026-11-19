@@ -11,8 +11,6 @@ const broadcastMessage = document.getElementById("broadcast-message");
 const fullscreenButton = document.getElementById("fullscreen-button");
 const fullscreenIcon = document.getElementById("fullscreen-icon");
 
-const liveVideo = document.getElementById("live-video");
-
 liveVideo.addEventListener("pause", () => {
     console.log("Video paused. Current time:", liveVideo.currentTime);
 });
