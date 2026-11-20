@@ -348,7 +348,7 @@ if (liveVideo && broadcastPlayer) {
         showLoading();
 
         try {
-            cost videoKey = new URL(
+            const videoKey = new URL(
                 videoUrl,
                 document.baseURI
             ).pathname.replace(/^\/+/, "");
