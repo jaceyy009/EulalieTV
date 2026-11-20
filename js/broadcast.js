@@ -349,7 +349,69 @@ if (liveVideo && broadcastPlayer) {
             const wasMuted = liveVideo.muted;
             const newSignedVideoUrl = authorization.url;
 
-            // finish!!
+            liveVideo.addEventListener("loadedmetadata", function onRenewed() {
+                liveVideo.removeEventListener("loadedmetadata", onRenewed);
+
+                if (
+                    activeSlotId !== slotId ||
+                    activeVideoUrl !== videoUrl
+                ) {
+                    return;
+                }
+
+                liveVideo.muted = wasMuted;
+
+                const targetTime = Number.isFinite(liveVideo.duration)
+                    ? Math.min(
+                        currentPosition,
+                        Math.max(0, liveVideo.duration - 1)
+                    )
+                    : currentPosition;
+
+                function resumePlayback() {
+                    if (wasPlaying) {
+                        liveVideo.play().catch(function (error) {
+                            console.warn("Playback renewal resume failed:", error);
+                        });
+                    }
+                }
+
+                if (Math.abs(liveVideo.currentTime - targetTime) < 0.05) {
+                    resumePlayback();
+                } else {
+                    liveVideo.addEventListener(
+                        "seeked",
+                        resumePlayback,
+                        { once: true }
+                    );
+
+                    liveVideo.currentTime = targetTime;
+                }
+            });
+
+            liveVideo.src = newSignedVideoUrl();
+            liveVideo.load();
+
+            schedulePlaybackRenewal(
+                videoKey,
+                slotId,
+                videoUrl,
+                authorization.expiresAt
+            );
+        } catch (error) {
+            console.error("Playback URL renewal error:", error);
+
+            if (
+                activeSlotId === slotId &&
+                activeVideoUrl === videoUrl
+            ) {
+                playbackRenewalTimer = setTimeout(function () {
+                    playbackRenewalTimer = null;
+                    renewPlaybackUrl(videoKey, slotId, videoUrl);
+                }, 30000);
+            }
+        }
+    }
 
     async function renderCurrentProgram(slot, currentTime) {
         const details = getProgramDetails(slot);
@@ -445,6 +507,13 @@ if (liveVideo && broadcastPlayer) {
             }
 
             const signedVideoUrl = authorization.url;
+
+            schedulePlaybackRenewal(
+                videoKey,
+                slot.id,
+                videoUrl,
+                authorization.expiresAt
+            );
 
             liveVideo.src = signedVideoUrl;
 
