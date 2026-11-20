@@ -9,6 +9,8 @@ const liveVideo = document.getElementById("live-video");
 const broadcastMessage = document.getElementById("broadcast-message");
 const broadcastLoading = document.getElementById("broadcast-loading");
 
+let playbackRenewalTimer = null;
+
 function showLoading() {
     broadcastLoading?.classList.remove("hidden");
 }
@@ -276,6 +278,11 @@ if (liveVideo && broadcastPlayer) {
     }
 
     function clearVideo() {        
+        if (playbackRenewalTimer !== null) {
+            clearTimeout(playbackRenewalTimer);
+            playbackRenewalTimer = null;
+        }
+        
         liveVideo.pause();
         liveVideo.removeAttribute("src");
         liveVideo.load();
