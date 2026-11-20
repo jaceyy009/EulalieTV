@@ -283,7 +283,7 @@ if (liveVideo && broadcastPlayer) {
         activeVideoUrl = null;
     }
 
-    function renderCurrentProgram(slot, currentTime) {
+    async function renderCurrentProgram(slot, currentTime) {
         const details = getProgramDetails(slot);
 
         if (!details) {
@@ -347,44 +347,80 @@ if (liveVideo && broadcastPlayer) {
 
         showLoading();
 
-        liveVideo.src = videoUrl;
+        try {
+            cost videoKey = new URL(
+                videoUrl,
+                document.baseURI
+            ).pathname.replace(/^\/+/, "");
 
-        liveVideo.addEventListener("loadedmetadata", function onLoaded() {
-            liveVideo.removeEventListener("loadedmetadata", onLoaded);
+            const authorizationResponse = await fetch(
+                "https://eulalietv-video-delivery.jaceyy012.workers.dev/authorize?key=" +
+                encodeURIComponent(videoKey)
+            );
 
-            const targetTime = Number.isFinite(liveVideo.duration)
-                ? Math.min(
-                    playbackOffset,
-                    Math.max(0, liveVideo.duration - 1)
-                )
-                : playbackOffset;
-
-            liveVideo.muted = true;
-
-            function startPlayback() {
-                liveVideo.play().then(function () {
-                    hideLoading();
-                }).catch(function (error) {
-                    console.warn("Automatic playback was blocked:", error);
-                    showMessage("Press play to start the broadcast.");
-                    hideLoading();
-                });
+            if (!authorizationResponse.ok) {
+                throw new Error("Playback authorization failed.");
             }
 
-            if (Math.abs(liveVideo.currentTime - targetTime) < 0.05) {
-                startPlayback();
-            } else {
-                liveVideo.addEventListener("seeked", function onSeeked() {
-                    if (liveVideo.src === new URL(videoUrl, document.baseURI).href) {
-                        startPlayback();
-                    }
-                }, { once: true });
+            const authorization = await authorizationResponse.json();
 
-                liveVideo.currentTime = targetTime;
+            if (!authorization.url) {
+                throw new Error("No playback URL was returned.");
             }
-        });
 
-        liveVideo.load();
+            // Make sure this is still the currently scheduled program
+            if (
+                activeSlotId !== slot.id ||
+                activeVideoUrl !== videoUrl
+            ) {
+                return;
+            }
+
+            const signedVideoUrl = authorization.url;
+
+            liveVideo.src = videoUrl;
+
+            liveVideo.addEventListener("loadedmetadata", function onLoaded() {
+                liveVideo.removeEventListener("loadedmetadata", onLoaded);
+
+                const targetTime = Number.isFinite(liveVideo.duration)
+                    ? Math.min(
+                        playbackOffset,
+                        Math.max(0, liveVideo.duration - 1)
+                    )
+                    : playbackOffset;
+
+                liveVideo.muted = true;
+
+                function startPlayback() {
+                    liveVideo.play().then(function () {
+                        hideLoading();
+                    }).catch(function (error) {
+                        console.warn("Automatic playback was blocked:", error);
+                        showMessage("Press play to start the broadcast.");
+                        hideLoading();
+                    });
+                }
+
+                if (Math.abs(liveVideo.currentTime - targetTime) < 0.05) {
+                    startPlayback();
+                } else {
+                    liveVideo.addEventListener("seeked", function onSeeked() {
+                        if (liveVideo.src === new URL(videoUrl, document.baseURI).href) {
+                            startPlayback();
+                        }
+                    }, { once: true });
+
+                    liveVideo.currentTime = targetTime;
+                }
+            });
+
+            liveVideo.load();
+        } catch (error) {
+            console.error("Unable to load broadcast:", error);
+            showMessage("Unable to load this program. Please try again later.");
+            hideLoading();
+        }
     }
 
     function renderNextProgram(slot) {
