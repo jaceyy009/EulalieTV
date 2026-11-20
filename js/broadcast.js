@@ -290,6 +290,67 @@ if (liveVideo && broadcastPlayer) {
         activeVideoUrl = null;
     }
 
+    function schedulePlaybackRenewal(videoKey, slotId, videoUrl, expiresAt) {
+        if (playbackRenewalTimer !== null) {
+            clearTimeout(playbackRenewalTimer);
+        }
+
+        const expirationTime = Date.parse(expiresAt);
+
+        if (!Number.isFinite(expirationTime)) {
+            console.error("Invalid playback URL expiration.");
+            return;
+        }
+
+        const renewalDelday = Math.max(
+            1000,
+            expirationTime - Date.now() - (5 * 60 * 1000)
+        );
+
+        playbackRenewalTimer = setTimeout(function () {
+            playbackRenewalTimer = null;
+            renewPlaybackUrl(videoKey, sloId, videoUrl);
+        }, renewalDelay);
+    }
+
+    async function renewPlaybackUrl(videoKey, slotId, videoUrl) {
+        if (
+            activeSlotId !== slotId ||
+            activeVideoUrl !== videoUrl
+        ) {
+            return;
+        }
+
+        try {
+            const response = await fetch(
+                "https://eulalietv-video-delivery.jaceyy012.workers.dev/authorize?key=" +
+                encodeURIComponent(videoKey)
+            );
+
+            if (!response.ok) {
+                throw new Error("Playback renewal failed.");
+            }
+
+            const authorization = await response.json();
+
+            if (!authorization.url || !authorization.expiresAt) {
+                throw new Error("Invalid renewal response.");
+            }
+
+            if (
+                activeSlotId !== slotId ||
+                activeVideoUrl !== videoUrl
+            ) {
+                return;
+            }
+
+            const currentPosition = liveVideo.currentTime;
+            const wasPlaying = !liveVideo.paused && !liveVideo.ended;
+            const wasMuted = liveVideo.muted;
+            const newSignedVideoUrl = authorization.url;
+
+            // finish!!
+
     async function renderCurrentProgram(slot, currentTime) {
         const details = getProgramDetails(slot);
 
