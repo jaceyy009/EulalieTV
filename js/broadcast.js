@@ -378,7 +378,7 @@ if (liveVideo && broadcastPlayer) {
 
             const signedVideoUrl = authorization.url;
 
-            liveVideo.src = videoUrl;
+            liveVideo.src = signedVideoUrl;
 
             liveVideo.addEventListener("loadedmetadata", function onLoaded() {
                 liveVideo.removeEventListener("loadedmetadata", onLoaded);
@@ -406,7 +406,7 @@ if (liveVideo && broadcastPlayer) {
                     startPlayback();
                 } else {
                     liveVideo.addEventListener("seeked", function onSeeked() {
-                        if (liveVideo.src === new URL(videoUrl, document.baseURI).href) {
+                        if (liveVideo.src === new URL(signedVideoUrl, document.baseURI).href) {
                             startPlayback();
                         }
                     }, { once: true });
