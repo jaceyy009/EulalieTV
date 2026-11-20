@@ -302,7 +302,7 @@ if (liveVideo && broadcastPlayer) {
             return;
         }
 
-        const renewalDelday = Math.max(
+        const renewalDelay = Math.max(
             1000,
             expirationTime - Date.now() - (5 * 60 * 1000)
         );
