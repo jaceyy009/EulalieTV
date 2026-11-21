@@ -12,6 +12,7 @@ const broadcastLoading = document.getElementById("broadcast-loading");
 let playbackRenewalTimer = null;
 let playbackRetryTimer = null;
 let playbackRetryCount = 0;
+let playbackStallTimer = null;
 let activePlaybackSlot = null;
 let activePlaybackTime = null;
 
@@ -282,6 +283,11 @@ if (liveVideo && broadcastPlayer) {
     }
 
     function clearVideo() {
+        if (playbackStallTimer !== null) {
+            clearTimeout(playbackStallTimer);
+            playbackStallTimer = null;
+        }
+        
         if (playbackRenewalTimer !== null) {
             clearTimeout(playbackRenewalTimer);
             playbackRenewalTimer = null;
@@ -474,6 +480,21 @@ if (liveVideo && broadcastPlayer) {
             return;
         }
 
+        if (activeSlotId !== slot.id || activeVideoUrl !== videoUrl) {
+            
+            if (playbackRetryTimer !== null) {
+                clearTimeout(playbackRetryTimer);
+                playbackRetryTimer = null;
+            }
+
+            if (playbackStallTimer !== null) {
+                clearTimeout(playbackStallTimer);
+                playbackStallTimer = null;
+            }
+
+            playbackRetryCount = 0;
+        }
+
         activePlaybackSlot = slot;
         activeSlotId = slot.id;
         activeVideoUrl = videoUrl;
@@ -605,6 +626,39 @@ if (liveVideo && broadcastPlayer) {
             renderCurrentProgram(currentSlot, currentTime, true);
         }, delay);
     }
+
+    function schedulePlaybackStallCheck() {
+        if (playbackStallTimer !== null) {
+            clearTimeout(playbackStallTimer);
+        }
+
+        if (!activePlaybackSlot || !activeVideoUrl || liveVideo.paused) {
+            return;
+        }
+
+        playbackStallTimer = setTimeout(function () {
+            playbackStallTimer = null;
+
+            if (!liveVideo.paused && !liveVideo.ended && activePlaybackSlot && activeVideourl) {
+                console.warn("Playback appears to be stuck buffering.");
+            }
+        }, 20000);
+    }
+
+    liveVideo.addEventListener("waiting", function () {
+        schedulePlaybackStallCheck();
+    });
+
+    liveVideo.addEventListener("stalled", function () {
+        schedulePlaybackStallCheck();
+    });
+
+    liveVideo.addEventListener("playing", function () {
+        if (playbackStallTimer !== null) {
+            clearTimeout(playbackStallTimer);
+            playbackStallTimer = null;
+        }
+    });
 
     liveVideo.addEventListener("error", function () {
         if (activePlaybackSlot && activeVideoUrl) {
