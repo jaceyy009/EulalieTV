@@ -12,6 +12,7 @@ const broadcastLoading = document.getElementById("broadcast-loading");
 let playbackRenewalTimer = null;
 let playbackRetryCount = 0;
 let activePlaybackSlot = null;
+let activePlaybackTime = null;
 
 function showLoading() {
     broadcastLoading?.classList.remove("hidden");
@@ -585,6 +586,7 @@ if (liveVideo && broadcastPlayer) {
         }
 
         const currentTime = getEasternTimeParts();
+        activePlaybackTime = currentTime;
 
         const startTime = data.settings.broadcastStartTime || "07:00";
         const endTime = data.settings.broadcastEndTime || "23:00";
