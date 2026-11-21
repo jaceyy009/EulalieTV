@@ -304,7 +304,7 @@ if (liveVideo && broadcastPlayer) {
 
         const renewalDelay = Math.max(
             1000,
-            expirationTime - Date.now() - (59 * 60 * 1000)
+            expirationTime - Date.now() - (5 * 60 * 1000)
         );
 
         playbackRenewalTimer = setTimeout(function () {
