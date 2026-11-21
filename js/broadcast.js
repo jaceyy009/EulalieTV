@@ -10,6 +10,7 @@ const broadcastMessage = document.getElementById("broadcast-message");
 const broadcastLoading = document.getElementById("broadcast-loading");
 
 let playbackRenewalTimer = null;
+let playbackRetryTimer = null;
 let playbackRetryCount = 0;
 let activePlaybackSlot = null;
 let activePlaybackTime = null;
@@ -280,11 +281,14 @@ if (liveVideo && broadcastPlayer) {
         broadcastMessage.hidden = true;
     }
 
-    function clearVideo() {        
+    function clearVideo() {
         if (playbackRenewalTimer !== null) {
             clearTimeout(playbackRenewalTimer);
             playbackRenewalTimer = null;
         }
+
+        playbackRetryCount = 0;
+        activePlaybackSlot = null;
         
         liveVideo.pause();
         liveVideo.removeAttribute("src");
@@ -416,7 +420,7 @@ if (liveVideo && broadcastPlayer) {
         }
     }
 
-    async function renderCurrentProgram(slot, currentTime) {
+    async function renderCurrentProgram(slot, currentTime, forceReload = false) {
         const details = getProgramDetails(slot);
 
         if (!details) {
@@ -466,13 +470,11 @@ if (liveVideo && broadcastPlayer) {
 
         hideMessage();
 
-        if (
-            activeSlotId === slot.id &&
-            activeVideoUrl === videoUrl
-        ) {
+        if (!forceReload && activeSlotId === slot.id && activeVideoUrl === videoUrl) {
             return;
         }
 
+        activePlaybackSlot = slot;
         activeSlotId = slot.id;
         activeVideoUrl = videoUrl;
 
@@ -558,9 +560,69 @@ if (liveVideo && broadcastPlayer) {
             liveVideo.load();
         } catch (error) {
             console.error("Unable to load broadcast:", error);
-            showMessage("Unable to load this program. Please try again later.");
-            hideLoading();
+
+            if (activeSlotId === slot.id && activeVideoUrl === videoUrl) {
+                schedulePlaybackRetry();
+            }
         }
+    }
+
+    function schedulePlaybackRetry() {
+        if (playbackRetryTimer !== null) {
+            return;
+        }
+
+        const delays = [2000, 5000, 10000, 20000, 30000];
+        const delay = delays[
+            Math.min(playbackRetryCount, delays.length - 1)
+        ];
+
+        playbackRetryCount++;
+
+        showMessage(
+            "Connection interrupted. Retrying in " +
+            Math.ceil(delay / 1000) +
+            " seconds..."
+        );
+
+        showLoading();
+
+        playbackRetryTimer = setTimeout(function () {
+            playbackRetryTimer = null;
+
+            const currentTime = getEasternTimeParts();
+            
+            const currentSlot = data.getCurrentScheduleEntry(
+                currentTime.dayOfWeek,
+                currentTime.time
+            );
+
+            if (!currentSlot || !activePlaybackSlot || currentSlot.id !== activePlaybackSlot.id) {
+                updateBroadcast();
+                return;
+            }
+
+            renderCurrentProgram(currentSlot, currentTime, true);
+        }, delay);
+    }
+
+    liveVideo.addEventListener("error", function () {
+        if (activePlaybackSlot && activeVideoUrl) {
+            console.error("Video playback failed:", liveVideo.error);
+            schedulePlaybackRetry();
+        }
+    });
+
+    liveVideo.addEventListener("playing", function () {
+        if (playbackRetryTimer !== null) {
+            clearTimeout(playbackRetryTimer);
+            playbackRetryTimer = null;
+        }
+
+        playbackRetryCount = 0;
+
+        hideLoading();
+        hideMessage();
     }
 
     function renderNextProgram(slot) {
