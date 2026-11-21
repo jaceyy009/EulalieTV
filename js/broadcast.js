@@ -389,7 +389,7 @@ if (liveVideo && broadcastPlayer) {
                 }
             });
 
-            liveVideo.src = newSignedVideoUrl();
+            liveVideo.src = newSignedVideoUrl;
             liveVideo.load();
 
             schedulePlaybackRenewal(
