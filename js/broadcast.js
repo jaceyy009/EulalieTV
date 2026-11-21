@@ -287,6 +287,11 @@ if (liveVideo && broadcastPlayer) {
             clearTimeout(playbackStallTimer);
             playbackStallTimer = null;
         }
+
+        if (playbackRetryTimer !== null) {
+            clearTimeout(playbackRetryTimer);
+            playbackRetryTimer = null;
+        }
         
         if (playbackRenewalTimer !== null) {
             clearTimeout(playbackRenewalTimer);
@@ -639,8 +644,9 @@ if (liveVideo && broadcastPlayer) {
         playbackStallTimer = setTimeout(function () {
             playbackStallTimer = null;
 
-            if (!liveVideo.paused && !liveVideo.ended && activePlaybackSlot && activeVideourl) {
+            if (!liveVideo.paused && !liveVideo.ended && activePlaybackSlot && activeVideoUrl) {
                 console.warn("Playback appears to be stuck buffering.");
+                schedulePlaybackRetry();
             }
         }, 20000);
     }
@@ -677,7 +683,7 @@ if (liveVideo && broadcastPlayer) {
 
         hideLoading();
         hideMessage();
-    }
+    });
 
     function renderNextProgram(slot) {
         const details = getProgramDetails(slot);
