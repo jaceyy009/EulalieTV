@@ -309,7 +309,7 @@ if (liveVideo && broadcastPlayer) {
 
         playbackRenewalTimer = setTimeout(function () {
             playbackRenewalTimer = null;
-            renewPlaybackUrl(videoKey, sloId, videoUrl);
+            renewPlaybackUrl(videoKey, slotId, videoUrl);
         }, renewalDelay);
     }
 
