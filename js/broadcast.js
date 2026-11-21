@@ -10,6 +10,8 @@ const broadcastMessage = document.getElementById("broadcast-message");
 const broadcastLoading = document.getElementById("broadcast-loading");
 
 let playbackRenewalTimer = null;
+let playbackRetryCount = 0;
+let activePlaybackSlot = null;
 
 function showLoading() {
     broadcastLoading?.classList.remove("hidden");
