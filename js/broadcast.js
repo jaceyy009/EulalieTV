@@ -341,7 +341,7 @@ if (liveVideo && broadcastPlayer) {
 
         try {
             const response = await fetch(
-                "https://invalid-eulalietv-video-delivery.jaceyy012.workers.dev/authorize?key=" +
+                "https://invalid-eulalietv-test.jaceyy012.workers.dev/authorize?key=" +
                 encodeURIComponent(videoKey)
             );
 
