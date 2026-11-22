@@ -481,7 +481,9 @@ if (liveVideo && broadcastPlayer) {
             return;
         }
 
-        hideMessage();
+        if (!forceReload) {
+            hideMessage();
+        }
 
         if (!forceReload && activeSlotId === slot.id && activeVideoUrl === videoUrl) {
             return;
@@ -508,7 +510,9 @@ if (liveVideo && broadcastPlayer) {
 
         playbackOffset = getPlaybackOffset(slot, currentTime);
 
-        showLoading();
+        if (!forceReload) {
+            showLoading();
+        }
 
         try {
             const videoKey = new URL(
