@@ -613,8 +613,6 @@ if (liveVideo && broadcastPlayer) {
             " seconds..."
         );
 
-        showLoading();
-
         playbackRetryTimer = setTimeout(function () {
             playbackRetryTimer = null;
 
