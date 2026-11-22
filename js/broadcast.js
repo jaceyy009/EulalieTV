@@ -515,7 +515,7 @@ if (liveVideo && broadcastPlayer) {
             ).pathname.replace(/^\/+/, "");
 
             const authorizationResponse = await fetch(
-                "https://eulalietv-video-delivery.jaceyy012.workers.dev/authorize?key=" +
+                "https://invalid-eulalietv-test.jaceyy012.workers.dev/authorize?key=" +
                 encodeURIComponent(videoKey)
             );
 
