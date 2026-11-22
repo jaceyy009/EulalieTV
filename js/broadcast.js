@@ -139,6 +139,8 @@ updateFullscreenIcon();
 function showMessage(message) {
     if (!broadcastMessage) return;
 
+    hideLoading();
+
     broadcastMessage.textContent = message;
     broadcastMessage.hidden = false;
 }
